@@ -11,8 +11,8 @@ Correr localmente:
 Para que Meta pueda pegarle a este webhook necesitás una URL pública
 (en producción: Render/Railway; para probar en tu compu: ngrok).
 """
+import os
 from flask import Flask, request, jsonify
-
 import config
 import whatsapp_client
 import sheets_client
