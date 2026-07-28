@@ -13,7 +13,12 @@ WHATSAPP_VERIFY_TOKEN = os.environ.get("WHATSAPP_VERIFY_TOKEN", "cambiar-esto")
 WHATSAPP_API_VERSION = os.environ.get("WHATSAPP_API_VERSION", "v20.0")
 
 # --- Google Sheets ---
+# En local usamos el archivo service_account.json.
+# En Render (o cualquier hosting) no podés subir archivos, así que pegás el
+# contenido completo del JSON en la variable GOOGLE_SERVICE_ACCOUNT_JSON y
+# el código lo usa desde ahí. Si están las dos, gana la variable.
 GOOGLE_SERVICE_ACCOUNT_FILE = os.environ.get("GOOGLE_SERVICE_ACCOUNT_FILE", "service_account.json")
+GOOGLE_SERVICE_ACCOUNT_JSON = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON", "")
 GOOGLE_SHEET_ID = os.environ.get("GOOGLE_SHEET_ID", "")
 
 # --- Anthropic (Claude) ---

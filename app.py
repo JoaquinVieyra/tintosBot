@@ -13,12 +13,19 @@ Para que Meta pueda pegarle a este webhook necesitás una URL pública
 """
 import os
 from flask import Flask, request, jsonify
+
 import config
 import whatsapp_client
 import sheets_client
 import receipt_parser
 
 app = Flask(__name__)
+
+
+@app.route("/", methods=["GET"])
+def salud():
+    """Ruta simple para chequear a ojo que el servicio está vivo."""
+    return "Bot de comprobantes activo 🏀", 200
 
 
 @app.route("/webhook", methods=["GET"])

@@ -12,6 +12,7 @@ Setup necesario (una sola vez, lo hace Joaquín):
    (algo como nombre@proyecto.iam.gserviceaccount.com), dándole permiso de Editor.
 4. Poner el ID de la planilla (lo que aparece en la URL entre /d/ y /edit) en GOOGLE_SHEET_ID.
 """
+import json
 from datetime import date
 
 import gspread
@@ -24,11 +25,22 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 _client = None
 
 
+def _get_credentials():
+    """
+    En producción (Render) las credenciales vienen pegadas como texto en la
+    variable GOOGLE_SERVICE_ACCOUNT_JSON, porque no se pueden subir archivos.
+    En local seguimos leyendo el archivo service_account.json.
+    """
+    if config.GOOGLE_SERVICE_ACCOUNT_JSON:
+        info = json.loads(config.GOOGLE_SERVICE_ACCOUNT_JSON)
+        return Credentials.from_service_account_info(info, scopes=SCOPES)
+    return Credentials.from_service_account_file(config.GOOGLE_SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+
+
 def _get_client():
     global _client
     if _client is None:
-        creds = Credentials.from_service_account_file(config.GOOGLE_SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-        _client = gspread.authorize(creds)
+        _client = gspread.authorize(_get_credentials())
     return _client
 
 
